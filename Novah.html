@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MohBrisket</title>
+<link href="https://fonts.googleapis.com/css2?family=PT+Serif&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  body {
+    margin: 0;
+    font-family: 'PT Serif', serif;
+    color: #fff;
+    background: linear-gradient(to bottom, black, white); /* vertical gradient */
+    text-align: center;
+  }
+
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    gap: 15px;
+    padding: 15px 30px;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid rgba(255,255,255,0.3);
+    font-family: 'Lato', sans-serif;
+    z-index: 10;
+  }
+
+  nav a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  nav a:hover { background: rgba(255,255,255,0.25); }
+
+  .section {
+    display: none;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 100vh;
+    padding: 120px 30px 30px 30px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    background: linear-gradient(to bottom, black, white); /* gradient for sections */
+  }
+
+  .active { display: flex; }
+
+  #homeSection { justify-content: center; overflow: hidden; }
+
+  h1 {
+    font-size: 6rem;
+    text-shadow:
+      0 0 15px rgba(255,255,255,1),
+      0 0 30px rgba(255,255,255,0.9),
+      0 0 60px rgba(255,255,255,0.7),
+      0 0 100px rgba(255,255,255,0.6);
+    margin-bottom: 20px;
+  }
+
+  p {
+    font-family: 'Lato', sans-serif;
+    font-style: italic;
+    font-size: 1.5rem;
+    max-width: 800px;
+    line-height: 1.6;
+    text-shadow: 0 0 10px rgba(255,255,255,0.5);
+  }
+
+  /* Music Panel */
+  .music-panel {
+    width: 500px;
+    height: 550px;
+    margin: 40px auto;
+    border-radius: 20px;
+    background: #000000; /* vanta black */
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    box-sizing: border-box;
+  }
+
+  #musicSearch {
+    width: 95%;
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: none;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    outline: none;
+  }
+
+  #musicSearch::placeholder { color: rgba(255,255,255,0.7); }
+
+  #songList { flex: 1; overflow-y: auto; }
+
+  .song {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 15px;
+    margin: 5px 0;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.1);
+    transition: background 0.2s, box-shadow 0.2s;
+  }
+
+  .song.active {
+    background: rgba(255,255,255,0.25);
+    box-shadow: 0 0 15px rgba(255,255,255,0.4);
+  }
+
+  .song-header { display: flex; justify-content: space-between; align-items: center; }
+
+  .play-btn, .shuffle-btn, .repeat-btn {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 5px;
+  }
+
+  .play-btn:hover, .shuffle-btn:hover, .repeat-btn:hover { background: rgba(255,255,255,0.4); }
+
+  .progress-container {
+    width: 100%;
+    height: 6px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 3px;
+    margin-top: 5px;
+    cursor: pointer;
+  }
+
+  .progress-bar {
+    height: 100%;
+    width: 0%;
+    background: white;
+    border-radius: 3px;
+  }
+
+  .time {
+    font-size: 0.8rem;
+    text-align: right;
+    margin-top: 3px;
+    color: #fff;
+  }
+
+  .volume-slider { width: 100%; margin-top: 5px; }
+
+  .controls { display: flex; justify-content: center; gap: 10px; margin-bottom: 10px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a id="homeBtn">Home</a>
+  <a id="musicBtn">Music</a>
+</nav>
+
+<!-- Home Section -->
+<div id="homeSection" class="section active">
+  <h1>MohBrisket</h1>
+  <p id="homeDescription"></p>
+</div>
+
+<!-- Music Section -->
+<div id="musicSection" class="section">
+  <h1>Music</h1>
+  <p id="musicDescription"></p>
+
+  <div class="music-panel">
+    <div class="controls">
+      <button id="shuffleBtn" class="shuffle-btn">🔀</button>
+      <button id="repeatBtn" class="repeat-btn">🔁</button>
+    </div>
+    <input type="text" id="musicSearch" placeholder="Search for a song..." />
+    <div id="songList"></div>
+  </div>
+</div>
+
+<script>
+const homeDescription = document.getElementById("homeDescription");
+const musicDescription = document.getElementById("musicDescription");
+
+const homeTexts = [
+  "website made by mohammads brother",
+  "67 🔥🔥",
+  "sdiybt 🙏",
+  "i bet you like femboys"
+  "we should forgive the thick of it."
+  "ambatakaaaaaa~~~m 🔥🔥"
+];
+
+const musicTexts = [
+  "Your personal music hub.",
+  "Play. Shuffle. Repeat.",
+  "Dark mode, bright vibes.",
+  "Find your soundtrack here."
+];
+
+function rotateText(element, texts, interval) {
+  let index = 0;
+  element.textContent = texts[index];
+  setInterval(() => {
+    index = (index + 1) % texts.length;
+    element.textContent = texts[index];
+  }, interval);
+}
+
+rotateText(homeDescription, homeTexts, 3000);
+rotateText(musicDescription, musicTexts, 4000);
+
+const homeBtn = document.getElementById("homeBtn");
+const musicBtn = document.getElementById("musicBtn");
+const homeSection = document.getElementById("homeSection");
+const musicSection = document.getElementById("musicSection");
+
+homeBtn.addEventListener("click", () => {
+  homeSection.classList.add("active");
+  musicSection.classList.remove("active");
+});
+
+musicBtn.addEventListener("click", () => {
+  musicSection.classList.add("active");
+  homeSection.classList.remove("active");
+});
+
+// Music Player
+const songs = [
+  { title: "Song 1", src: "song1.mp3" },
+  { title: "Song 2", src: "song2.mp3" },
+  { title: "Song 3", src: "song3.mp3" },
+  { title: "Song 4", src: "song4.mp3" },
+  { title: "Song 5", src: "song5.mp3" },
+  { title: "Song 6", src: "song6.mp3  },
+  { title: "Song 7", src: "song7.mp3  },
+  { title: "Song 8", src: "song8.mp3  },
+  { title: "Song 9", src: "song9.mp3  },
+  { title: "Song 10", src: "song10.mp3  },
+];
+
+const songList = document.getElementById("songList");
+const searchInput = document.getElementById("musicSearch");
+
+let currentSongIndex = null;
+let audio = new Audio();
+let repeat = false;
+
+function renderSongs(filter = "") {
+  songList.innerHTML = "";
+  songs
+    .filter(song => song.title.toLowerCase().includes(filter.toLowerCase()))
+    .forEach((song, index) => {
+      const songDiv = document.createElement("div");
+      songDiv.classList.add("song");
+      songDiv.innerHTML = `
+        <div class="song-header">
+          <span>${song.title}</span>
+          <button class="play-btn">▶</button>
+        </div>
+        <div class="progress-container"><div class="progress-bar"></div></div>
+        <div class="time">0:00</div>
+        <input type="range" min="0" max="1" step="0.01" value="1" class="volume-slider">
+      `;
+      const playBtn = songDiv.querySelector(".play-btn");
+      const progressBar = songDiv.querySelector(".progress-bar");
+      const progressContainer = songDiv.querySelector(".progress-container");
+      const timeDisplay = songDiv.querySelector(".time");
+      const volumeSlider = songDiv.querySelector(".volume-slider");
+
+      playBtn.addEventListener("click", () => togglePlay(index, playBtn, progressBar, timeDisplay));
+      progressContainer.addEventListener("click", e => seek(e, index, progressContainer, progressBar));
+      volumeSlider.addEventListener("input", e => audio.volume = e.target.value);
+
+      songList.appendChild(songDiv);
+    });
+}
+
+function togglePlay(index, btn, bar, timeDisplay) {
+  if (currentSongIndex !== index) {
+    audio.pause();
+    audio = new Audio(songs[index].src);
+    currentSongIndex = index;
+    audio.addEventListener("timeupdate", () => updateProgress(bar, timeDisplay));
+    audio.addEventListener("ended", () => {
+      if (repeat) {
+        audio.currentTime = 0;
+        audio.play();
+      } else {
+        btn.textContent = "▶";
+      }
+    });
+  }
+  if (audio.paused) {
+    audio.play();
+    btn.textContent = "⏸";
+  } else {
+    audio.pause();
+    btn.textContent = "▶";
+  }
+}
+
+function updateProgress(bar, timeDisplay) {
+  const percent = (audio.currentTime / audio.duration) * 100;
+  bar.style.width = percent + "%";
+  const minutes = Math.floor(audio.currentTime / 60);
+  const seconds = Math.floor(audio.currentTime % 60).toString().padStart(2,"0");
+  timeDisplay.textContent = `${minutes}:${seconds}`;
+}
+
+function seek(e, index, container, bar) {
+  if (currentSongIndex === index) {
+    const percent = e.offsetX / container.offsetWidth;
+    audio.currentTime = percent * audio.duration;
+    bar.style.width = percent * 100 + "%";
+  }
+}
+
+document.getElementById("shuffleBtn").addEventListener("click", () => {
+  const randomIndex = Math.floor(Math.random() * songs.length);
+  if (randomIndex !== currentSongIndex) {
+    const playBtn = songList.children[randomIndex].querySelector(".play-btn");
+    playBtn.click();
+  }
+});
+
+document.getElementById("repeatBtn").addEventListener("click", () => {
+  repeat = !repeat;
+  document.getElementById("repeatBtn").style.background = repeat ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.2)";
+});
+
+searchInput.addEventListener("input", () => renderSongs(searchInput.value));
+
+renderSongs();
+</script>
+
+</body>
+</html>
