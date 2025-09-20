@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MohBrisket</title>
+<title>Novah</title>
 <link href="https://fonts.googleapis.com/css2?family=PT+Serif&family=Lato:wght@400;700&display=swap" rel="stylesheet">
 <style>
   body {
     margin: 0;
     font-family: 'PT Serif', serif;
     color: #fff;
-    background: linear-gradient(to bottom, black, white); /* vertical gradient */
+    background: linear-gradient(to bottom, magenta, pink);
     text-align: center;
   }
 
@@ -36,6 +36,7 @@
     padding: 8px 15px;
     border-radius: 8px;
     font-weight: 700;
+    font-style: normal;
     cursor: pointer;
     transition: background 0.3s;
   }
@@ -51,7 +52,6 @@
     padding: 120px 30px 30px 30px;
     box-sizing: border-box;
     overflow-y: auto;
-    background: linear-gradient(to bottom, black, white); /* gradient for sections */
   }
 
   .active { display: flex; }
@@ -62,9 +62,9 @@
     font-size: 6rem;
     text-shadow:
       0 0 15px rgba(255,255,255,1),
-      0 0 30px rgba(255,255,255,0.9),
-      0 0 60px rgba(255,255,255,0.7),
-      0 0 100px rgba(255,255,255,0.6);
+      0 0 30px rgba(255,0,255,0.9),
+      0 0 60px rgba(255,0,255,0.7),
+      0 0 100px rgba(255,0,255,0.6);
     margin-bottom: 20px;
   }
 
@@ -83,8 +83,8 @@
     height: 550px;
     margin: 40px auto;
     border-radius: 20px;
-    background: #000000; /* vanta black */
-    box-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
+    background: linear-gradient(to bottom right, darkmagenta, deeppink);
+    box-shadow: 0 0 25px rgba(255, 0, 255, 0.5);
     display: flex;
     flex-direction: column;
     padding: 15px;
@@ -176,7 +176,7 @@
 
 <!-- Home Section -->
 <div id="homeSection" class="section active">
-  <h1>MohBrisket</h1>
+  <h1>Novah</h1>
   <p id="homeDescription"></p>
 </div>
 
@@ -196,37 +196,33 @@
 </div>
 
 <script>
-const homeDescription = document.getElementById("homeDescription");
-const musicDescription = document.getElementById("musicDescription");
-
-const homeTexts = [
-  "website made by mohammads brother",
-  "67 🔥🔥",
-  "sdiybt 🙏",
-  "i bet you like femboys"
-  "we should forgive the thick of it."
-  "ambatakaaaaaa~~~m 🔥🔥"
+// Descriptions
+const homeDescriptions = [
+  "Love is a fire that warms the soul, It lifts us high and makes us whole.",
+  "In your smile I see the skies, A brighter world within your eyes.",
+  "Love’s a river, deep and wide, Flowing gently, side by side.",
+  "Your touch is soft, your heart is kind, A sweeter treasure I’ll never find.",
+  "Love’s a song that never ends, A bond of hearts, two dearest friends.",
+  "Through the storms, love stays strong, Guiding us where we belong.",
+  "With every breath, I feel its glow, A timeless gift that helps us grow.",
+  "Love’s the light that leads us through, forever bright and always true."
 ];
 
-const musicTexts = [
-  "Your personal music hub.",
-  "Play. Shuffle. Repeat.",
-  "Dark mode, bright vibes.",
-  "Find your soundtrack here."
+const musicDescriptions = [
+  "Music is the heartbeat of the soul, echoing dreams untold.",
+  "Notes flow like rivers, carrying emotions deep within.",
+  "Every song tells a story, every rhythm moves the heart.",
+  "Through melodies, we find connection, peace, and joy.",
+  "Let the music guide you, uplift you, and set you free."
 ];
 
-function rotateText(element, texts, interval) {
-  let index = 0;
-  element.textContent = texts[index];
-  setInterval(() => {
-    index = (index + 1) % texts.length;
-    element.textContent = texts[index];
-  }, interval);
-}
+document.getElementById("homeDescription").textContent =
+  homeDescriptions[Math.floor(Math.random() * homeDescriptions.length)];
 
-rotateText(homeDescription, homeTexts, 3000);
-rotateText(musicDescription, musicTexts, 4000);
+document.getElementById("musicDescription").textContent =
+  musicDescriptions[Math.floor(Math.random() * musicDescriptions.length)];
 
+// Navigation
 const homeBtn = document.getElementById("homeBtn");
 const musicBtn = document.getElementById("musicBtn");
 const homeSection = document.getElementById("homeSection");
@@ -242,114 +238,143 @@ musicBtn.addEventListener("click", () => {
   homeSection.classList.remove("active");
 });
 
-// Music Player
+// Songs data
 const songs = [
-  { title: "Song 1", src: "song1.mp3" },
-  { title: "Song 2", src: "song2.mp3" },
-  { title: "Song 3", src: "song3.mp3" },
-  { title: "Song 4", src: "song4.mp3" },
-  { title: "Song 5", src: "song5.mp3" },
-  { title: "Song 6", src: "song6.mp3  },
-  { title: "Song 7", src: "song7.mp3  },
-  { title: "Song 8", src: "song8.mp3  },
-  { title: "Song 9", src: "song9.mp3  },
-  { title: "Song 10", src: "song10.mp3  },
+  { name: "Bodypartz", url: "https://dl.dropboxusercontent.com/scl/fi/ld3g9d2z2rkrmxgodl8na/bodypartz.mp3?rlkey=7rphj1m3dxyk204e71gdqt9lm&st=a88lgsrm&dl=0" },
+  { name: "Hey", url: "https://dl.dropboxusercontent.com/scl/fi/fuvg6qylevnu3vnu2aqgd/hey.mp3?rlkey=uevxtq793bz7y4smywp75wkep&st=4bej6pp5&dl=0" },
+  { name: "Confess Your Love", url: "https://dl.dropboxusercontent.com/scl/fi/tqdsgsb4t33zkzmbuolci/CYL.mp3?rlkey=je56mc5sxnq1gzxc0zh3wfozm&st=cjizhhuq&dl=0" },
+  { name: "TV Off", url: "https://dl.dropboxusercontent.com/scl/fi/whf44cdnw5hebv5p7cf0a/TO.mp3?rlkey=itxs5aawz2fe76oqrsiey9cwu&st=pv68tk4r&dl=0" },
+  { name: "Get Off The Leash", url: "https://dl.dropboxusercontent.com/scl/fi/nvc7l3ihgy0ry2c93g2rt/GOTL.mp3?rlkey=uhxals48b16j76zeno7khhvro&st=3wv1qy4m&dl=0" },
+  { name: "Rags2Riches", url: "https://dl.dropboxusercontent.com/scl/fi/6d45i7qxiw7ccd42h24dv/R2R.mp3?rlkey=jdomhs1s6wbthx3q95utuxc40&st=ei1f3y6p&dl=0" },
+  { name: "KEHLANI", url: "https://dl.dropboxusercontent.com/scl/fi/x3l95c7vu4pbyvy67znep/KLNI.mp3?rlkey=rnnkgn6wdllemfh3j25xv9z64&st=1bkzk650&dl=0" },
+  { name: "Blueberry Faygo", url: "https://dl.dropboxusercontent.com/scl/fi/h41djbbhzx2kjcbxytbr4/BF.mp3?rlkey=hte5vs7jug5lugywiczvjqsvv&st=4rw1sole&dl=0" },
+  { name: "Astronaut In The Ocean", url: "https://dl.dropboxusercontent.com/scl/fi/itvm2j5d3rnvu5b4yl5za/AST.mp3?rlkey=o4rl6jzw1s5tj94vm8k86g8l2&st=v4amvmdg&dl=0" },
+  { name: "BANGARANG", url: "https://dl.dropboxusercontent.com/scl/fi/puwsv7a2qimxv6o76u52t/BNGRNG.mp3?rlkey=i8mlw0r9figzq3qq1gjo5daaq&st=vldwajvt&dl=0" },
+  { name: "fukumean", url: "https://dl.dropboxusercontent.com/scl/fi/107wy5h286li56pjabllk/FKYM.mp3?rlkey=kjucnquyq4vy7h5yocxkhue9i&st=0cw1hgdn&dl=0" },
+  { name: "SICKO MODE", url: "https://dl.dropboxusercontent.com/scl/fi/9iq4sb6rx3abzzqdjhv9h/SM.mp3?rlkey=osf0za46wa7n4hl6z44cyqjgi&st=fumrsqiz&dl=0" },
+  { name: "Popular", url: "https://dl.dropboxusercontent.com/scl/fi/2mez2itq3440o9cmtigbb/P.mp3?rlkey=s1krupfb8zh8v4l90p2qsbcez&st=2pg1ndib&dl=0" },
+  { name: "Montagem Pixel Estelar 1.0", url: "https://dl.dropboxusercontent.com/scl/fi/2wspm9tkmjmhb6fgvcxq5/MPE.mp3?rlkey=5w81zb4vif64ur33a39nb1wqo&st=75qrgzog&dl=0" },
+  { name: "DIA DELICIA", url: "https://dl.dropboxusercontent.com/scl/fi/f8f4oiyzqg9meyru7zby2/DD.mp3?rlkey=3xn6k1hckclt4573iumwlo8bt&st=r12uir9u&dl=0" },
+  { name: "BEST SONG EVER!! 1 HOUR", url: "https://dl.dropboxusercontent.com/scl/fi/d1q43g5ww2i3aksimo4jx/BSE.mp3?rlkey=u2z6r571bpwez5v8tbpuuco7y&st=tm8bmelo&dl=0" },
+  { name: "Tralalero Tralala Phonk", url: "https://dl.dropboxusercontent.com/scl/fi/jtg64urckrxd10h1ppeq3/TT.mp3?rlkey=j3g4scdls4qokrifld61rfka2&st=v0jsg3i8&dl=0" },
+  { name: "Montagem Xonada", url: "https://dl.dropboxusercontent.com/scl/fi/h56x1jk8ntpsd76v7yg68/MX.mp3?rlkey=zs43zzw6e23y1f2l92jfpg6qu&st=2qwi6eyt&dl=0" },
+  { name: "MIX OF POPULAR PHONKS 2025", url: "https://dl.dropboxusercontent.com/scl/fi/q874flszuzonzqhq100mz/MIX.mp3?rlkey=vukxw34xivb1d2hhh40ajh3n7&st=hxux6e0e&dl=0" }
 ];
 
-const songList = document.getElementById("songList");
-const searchInput = document.getElementById("musicSearch");
+const songListDiv = document.getElementById("songList");
+let isShuffle = false;
+let isRepeat = false;
 
-let currentSongIndex = null;
-let audio = new Audio();
-let repeat = false;
+function formatTime(seconds) {
+  const m = Math.floor(seconds / 60).toString().padStart(2,'0');
+  const s = Math.floor(seconds % 60).toString().padStart(2,'0');
+  return `${m}:${s}`;
+}
 
 function renderSongs(filter = "") {
-  songList.innerHTML = "";
-  songs
-    .filter(song => song.title.toLowerCase().includes(filter.toLowerCase()))
-    .forEach((song, index) => {
-      const songDiv = document.createElement("div");
-      songDiv.classList.add("song");
-      songDiv.innerHTML = `
-        <div class="song-header">
-          <span>${song.title}</span>
-          <button class="play-btn">▶</button>
-        </div>
-        <div class="progress-container"><div class="progress-bar"></div></div>
-        <div class="time">0:00</div>
-        <input type="range" min="0" max="1" step="0.01" value="1" class="volume-slider">
-      `;
-      const playBtn = songDiv.querySelector(".play-btn");
-      const progressBar = songDiv.querySelector(".progress-bar");
-      const progressContainer = songDiv.querySelector(".progress-container");
-      const timeDisplay = songDiv.querySelector(".time");
-      const volumeSlider = songDiv.querySelector(".volume-slider");
+  songListDiv.innerHTML = "";
+  const filteredSongs = songs.filter(song => song.name.toLowerCase().includes(filter.toLowerCase()));
 
-      playBtn.addEventListener("click", () => togglePlay(index, playBtn, progressBar, timeDisplay));
-      progressContainer.addEventListener("click", e => seek(e, index, progressContainer, progressBar));
-      volumeSlider.addEventListener("input", e => audio.volume = e.target.value);
+  filteredSongs.forEach(song => {
+    const songDiv = document.createElement("div");
+    songDiv.classList.add("song");
 
-      songList.appendChild(songDiv);
-    });
-}
+    songDiv.innerHTML = `
+      <div class="song-header">
+        <span>${song.name}</span>
+        <button class="play-btn">▶</button>
+      </div>
+      <div class="progress-container">
+        <div class="progress-bar"></div>
+      </div>
+      <div class="time">00:00</div>
+      <input type="range" min="0" max="1" step="0.01" value="1" class="volume-slider">
+      <audio src="${song.url}"></audio>
+    `;
 
-function togglePlay(index, btn, bar, timeDisplay) {
-  if (currentSongIndex !== index) {
-    audio.pause();
-    audio = new Audio(songs[index].src);
-    currentSongIndex = index;
-    audio.addEventListener("timeupdate", () => updateProgress(bar, timeDisplay));
-    audio.addEventListener("ended", () => {
-      if (repeat) {
-        audio.currentTime = 0;
-        audio.play();
-      } else {
-        btn.textContent = "▶";
+    const playBtn = songDiv.querySelector(".play-btn");
+    const audio = songDiv.querySelector("audio");
+    const progressBar = songDiv.querySelector(".progress-bar");
+    const progressContainer = songDiv.querySelector(".progress-container");
+    const timeDisplay = songDiv.querySelector(".time");
+    const volumeSlider = songDiv.querySelector(".volume-slider");
+
+    playBtn.addEventListener("click", () => {
+      document.querySelectorAll("#songList audio").forEach(a => {
+        if(a !== audio){ 
+          a.pause(); 
+          a.currentTime = 0; 
+          const parent = a.parentElement;
+          parent.querySelector(".play-btn").textContent = "▶"; 
+          parent.querySelector(".progress-bar").style.width = "0%"; 
+          parent.querySelector(".time").textContent = "00:00"; 
+          parent.classList.remove("active");
+        }
+      });
+
+      if(audio.paused){ 
+        audio.play(); 
+        playBtn.textContent = "⏸"; 
+        songDiv.classList.add("active"); 
+      } else { 
+        audio.pause(); 
+        playBtn.textContent = "▶"; 
+        songDiv.classList.remove("active"); 
       }
+
+      audio.onended = () => { 
+        playBtn.textContent = "▶"; 
+        progressBar.style.width = "0%"; 
+        timeDisplay.textContent = "00:00"; 
+        songDiv.classList.remove("active");
+
+        if(isRepeat) { audio.play(); return; }
+        if(isShuffle) {
+          const nextIndex = Math.floor(Math.random() * filteredSongs.length);
+          songListDiv.querySelectorAll(".play-btn")[nextIndex].click();
+        }
+      };
     });
-  }
-  if (audio.paused) {
-    audio.play();
-    btn.textContent = "⏸";
-  } else {
-    audio.pause();
-    btn.textContent = "▶";
-  }
+
+    audio.ontimeupdate = () => {
+      const percent = (audio.currentTime / audio.duration) * 100;
+      progressBar.style.width = percent + "%";
+      timeDisplay.textContent = formatTime(audio.currentTime) + " / " + formatTime(audio.duration);
+    };
+
+    progressContainer.addEventListener("click", (e) => {
+      const rect = progressContainer.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const width = rect.width;
+      audio.currentTime = (clickX / width) * audio.duration;
+    });
+
+    volumeSlider.addEventListener("input", () => {
+      audio.volume = volumeSlider.value;
+    });
+
+    songListDiv.appendChild(songDiv);
+  });
 }
 
-function updateProgress(bar, timeDisplay) {
-  const percent = (audio.currentTime / audio.duration) * 100;
-  bar.style.width = percent + "%";
-  const minutes = Math.floor(audio.currentTime / 60);
-  const seconds = Math.floor(audio.currentTime % 60).toString().padStart(2,"0");
-  timeDisplay.textContent = `${minutes}:${seconds}`;
-}
+// Initial render
+renderSongs();
 
-function seek(e, index, container, bar) {
-  if (currentSongIndex === index) {
-    const percent = e.offsetX / container.offsetWidth;
-    audio.currentTime = percent * audio.duration;
-    bar.style.width = percent * 100 + "%";
-  }
-}
+// Search input
+document.getElementById("musicSearch").addEventListener("input", (e) => {
+  renderSongs(e.target.value);
+});
 
+// Shuffle & Repeat Buttons
 document.getElementById("shuffleBtn").addEventListener("click", () => {
-  const randomIndex = Math.floor(Math.random() * songs.length);
-  if (randomIndex !== currentSongIndex) {
-    const playBtn = songList.children[randomIndex].querySelector(".play-btn");
-    playBtn.click();
-  }
+  isShuffle = !isShuffle;
+  document.getElementById("shuffleBtn").style.background = isShuffle ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.2)";
 });
 
 document.getElementById("repeatBtn").addEventListener("click", () => {
-  repeat = !repeat;
-  document.getElementById("repeatBtn").style.background = repeat ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.2)";
+  isRepeat = !isRepeat;
+  document.getElementById("repeatBtn").style.background = isRepeat ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.2)";
 });
-
-searchInput.addEventListener("input", () => renderSongs(searchInput.value));
-
-renderSongs();
 </script>
-
 </body>
 </html>
